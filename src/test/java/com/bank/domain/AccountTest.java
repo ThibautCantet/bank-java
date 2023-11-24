@@ -33,7 +33,7 @@ class AccountTest {
         account.withdraw(50);
 
         assertThat(account.getCurrentBalance()).isEqualTo(50);
-        assertThat(account.getEvents()).containsExactly(new AmountDeposited(100), new AmountWithDrawn(50));
+        assertThat(account.getEvents()).containsExactly(new AmountDeposited(100), new AmountWithdrawn(50));
     }
 
     @Test
@@ -47,10 +47,10 @@ class AccountTest {
 
     @Test
     void instantiation_should_initialize_the_balance_depending_of_the_previous_operations() {
-        Account account = new Account(List.of(new AmountDeposited(100), new AmountWithDrawn(10)));
+        Account account = new Account(List.of(new AmountDeposited(100), new AmountWithdrawn(10)));
 
         assertThat(account.getCurrentBalance()).isEqualTo(90);
-        assertThat(account.getEvents()).containsExactly(new AmountDeposited(100), new AmountWithDrawn(10));
+        assertThat(account.getEvents()).containsExactly(new AmountDeposited(100), new AmountWithdrawn(10));
     }
 }
 
