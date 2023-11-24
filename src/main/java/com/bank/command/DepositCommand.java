@@ -1,4 +1,6 @@
 package com.bank.command;
 
-public record DepositCommand(int amount) {
+import java.util.UUID;
+
+public record DepositCommand(UUID accountId, int amount) {
 }
