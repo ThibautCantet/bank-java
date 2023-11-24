@@ -44,7 +44,7 @@ class RedisEventStoreTest {
 
         Events events = redisTemplate.opsForValue().get(ACCOUNT_ID.toString());
         assertThat(events).isNotNull();
-        assertThat(events.values()).containsExactly(new AmountDeposited(100), new AmountWithdrawn(10), new WithdrawRejected(200), new DepositRejected(-10));
+        assertThat(events.values()).containsExactly(new AmountDeposited(ACCOUNT_ID, 100), new AmountWithdrawn(ACCOUNT_ID, 10), new WithdrawRejected(ACCOUNT_ID, 200), new DepositRejected(ACCOUNT_ID, -10));
     }
 
     @Test

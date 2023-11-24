@@ -44,10 +44,10 @@ public class Account {
     @DecisionFunction
     public void deposit(int amount) {
         if (amount < 0) {
-            recordChange(new DepositRejected(amount));
+            recordChange(new DepositRejected(id, amount));
         }
         else {
-            var amountDeposited = new AmountDeposited(amount);
+            var amountDeposited = new AmountDeposited(id, amount);
             apply(amountDeposited);
             recordChange(amountDeposited);
         }
@@ -56,10 +56,10 @@ public class Account {
     @DecisionFunction
     public void withdraw(int amount) {
         if (amount > balance) {
-            recordChange(new WithdrawRejected(amount));
+            recordChange(new WithdrawRejected(id, amount));
         }
         else {
-            var amountWithdrawn = new AmountWithdrawn(amount);
+            var amountWithdrawn = new AmountWithdrawn(id, amount);
             apply(amountWithdrawn);
             recordChange(amountWithdrawn);
         }

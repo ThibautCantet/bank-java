@@ -1,4 +1,6 @@
 package com.bank.domain;
 
-public record AmountDeposited(int amount) implements Event {
+import java.util.UUID;
+
+public record AmountDeposited(UUID accountId, int amount) implements Event {
 }

@@ -13,7 +13,7 @@ class AccountTest {
 
     @Test
     void instantiation_should_initialize_the_balance_depending_of_the_previous_operations() {
-        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100), new AmountWithdrawn(10)));
+        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(ACCOUNT_ID, 100), new AmountWithdrawn(ACCOUNT_ID, 10)));
 
         assertThat(account)
                 .extracting(Account::getId, Account::getCurrentBalance, Account::getEvents)
@@ -27,37 +27,37 @@ class AccountTest {
         account.deposit(100);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).containsExactly(new AmountDeposited(100));
+        assertThat(account.getEvents()).containsExactly(new AmountDeposited(ACCOUNT_ID, 100));
     }
 
     @Test
     void deposit_should_not_change_balance_when_value_is_negative() {
-        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100)));
+        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(ACCOUNT_ID, 100)));
 
         account.deposit(-50);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).contains(new DepositRejected(-50));
+        assertThat(account.getEvents()).contains(new DepositRejected(ACCOUNT_ID, -50));
     }
 
     @Test
     void withdraw_should_decrease_balance() {
-        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100)));
+        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(ACCOUNT_ID, 100)));
 
         account.withdraw(50);
 
         assertThat(account.getCurrentBalance()).isEqualTo(50);
-        assertThat(account.getEvents()).containsExactly(new AmountWithdrawn(50));
+        assertThat(account.getEvents()).containsExactly(new AmountWithdrawn(ACCOUNT_ID, 50));
     }
 
     @Test
     void withdraw_should_not_change_balance_when_insufficient_fund() {
-        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100)));
+        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(ACCOUNT_ID, 100)));
 
         account.withdraw(200);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).contains(new WithdrawRejected(200));
+        assertThat(account.getEvents()).contains(new WithdrawRejected(ACCOUNT_ID, 200));
     }
 }
 

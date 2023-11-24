@@ -1,4 +1,6 @@
 package com.bank.domain;
 
-public record WithdrawRejected(int amount) implements Event {
+import java.util.UUID;
+
+public record WithdrawRejected(UUID accountId, int amount) implements Event {
 }

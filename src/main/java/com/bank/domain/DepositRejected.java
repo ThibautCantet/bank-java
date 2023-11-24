@@ -1,4 +1,4 @@
 package com.bank.domain;
 
-public record DepositRejected(int amount) implements Event {
+public record DepositRejected(java.util.UUID accountId, int amount) implements Event {
 }

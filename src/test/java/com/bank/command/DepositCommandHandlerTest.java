@@ -38,6 +38,6 @@ class DepositCommandHandlerTest {
 
         verify(eventStore).save(accountArgumentCaptor.capture());
         assertThat(accountArgumentCaptor.getValue().getEvents())
-                .containsExactly(new AmountDeposited(100));
+                .containsExactly(new AmountDeposited(ACCOUNT_ID, 100));
     }
 }
