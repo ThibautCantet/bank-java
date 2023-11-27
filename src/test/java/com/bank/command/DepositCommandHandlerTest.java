@@ -9,10 +9,13 @@ import com.bank.domain.AmountDeposited;
 import com.bank.domain.EventStore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DepositCommandHandlerTest {
@@ -22,12 +25,19 @@ class DepositCommandHandlerTest {
     @Mock
     private EventStore eventStore;
 
+    @Captor
+    ArgumentCaptor<Account> accountArgumentCaptor;
+
     @Test
     void handle_should_increase_and_save_account() {
+        var account = new Account(List.of(new AccountCreated(ACCOUNT_ID)));
+        given(eventStore.find(ACCOUNT_ID)).willReturn(account);
         var depositCommandHandler = new DepositCommandHandler(eventStore);
 
         depositCommandHandler.handle(new DepositCommand(ACCOUNT_ID, 100));
 
-        verify(eventStore).save(new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100))));
+        verify(eventStore).save(accountArgumentCaptor.capture());
+        assertThat(accountArgumentCaptor.getValue().getEvents())
+                .containsExactly(new AmountDeposited(100));
     }
 }
