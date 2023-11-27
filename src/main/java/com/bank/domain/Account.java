@@ -4,11 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Account {
-    public Account(UUID id, List<Event> events) {
-
-    }
-
-    public Account(UUID id) {
+    public Account(List<Event> events) {
     }
 
     public void deposit(int amount) {
