@@ -3,6 +3,7 @@ package com.bank.command;
 import java.util.List;
 import java.util.UUID;
 
+import com.bank.domain.Account;
 import com.bank.domain.AmountDeposited;
 import com.bank.domain.EventStore;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,6 @@ class DepositCommandHandlerTest {
 
         depositCommandHandler.handle(new DepositCommand(ACCOUNT_ID, 100));
 
-        verify(eventStore).add(ACCOUNT_ID, List.of(new AmountDeposited(100)));
+        verify(eventStore).save(new Account(ACCOUNT_ID, List.of(new AmountDeposited(100))));
     }
 }
