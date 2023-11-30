@@ -3,8 +3,8 @@ package com.bank.infrastructure.controller;
 import java.util.List;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.bank.domain.AccountCreated;
+import com.bank.infrastructure.repository.Events;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +52,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void deposit_should_increase_balance() throws JsonProcessingException {
+    void deposit_should_increase_balance() {
         redisTemplate.opsForValue().set(ACCOUNT_ID.toString(), new Events(List.of(new AccountCreated(ACCOUNT_ID))));
 
         // @formatter:off

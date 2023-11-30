@@ -1,6 +1,9 @@
 package com.bank.command;
 
+import java.util.List;
+
 import com.bank.domain.Account;
+import com.bank.domain.Event;
 import com.bank.domain.EventStore;
 
 public class DepositCommandHandler {
@@ -12,9 +15,11 @@ public class DepositCommandHandler {
         this.eventStore = eventStore;
     }
 
-    public void handle(DepositCommand command) {
+    public List<Event> handle(DepositCommand command) {
         Account account = eventStore.find(command.accountId());
         account.deposit(command.amount());
         eventStore.save(account);
+
+        return account.getEvents();
     }
 }
