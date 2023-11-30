@@ -1,4 +1,4 @@
-package com.bank.infrastructure;
+package com.bank.infrastructure.repository;
 
 import java.util.List;
 

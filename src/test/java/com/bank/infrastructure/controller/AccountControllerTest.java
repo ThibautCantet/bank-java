@@ -1,4 +1,4 @@
-package com.bank.infrastructure;
+package com.bank.infrastructure.controller;
 
 import com.bank.domain.EventStore;
 import io.restassured.RestAssured;
