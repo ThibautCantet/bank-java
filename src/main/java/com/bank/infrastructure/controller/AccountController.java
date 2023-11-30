@@ -8,6 +8,8 @@ import com.bank.command.DepositCommandHandler;
 import com.bank.domain.AmountDeposited;
 import com.bank.domain.Event;
 import com.bank.domain.EventStore;
+import com.bank.query.GetBalanceQuery;
+import com.bank.query.GetBalanceQueryHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,9 @@ public class AccountController {
 
     @GetMapping("{id}/balance/")
     public Balance get(@PathVariable("id") UUID id) {
-        return new Balance(eventStore.find(id).getCurrentBalance());
+        var getBalanceQueryHandler = new GetBalanceQueryHandler(eventStore);
+        float balance = getBalanceQueryHandler.handle(new GetBalanceQuery(id));
+        return new Balance(balance);
     }
 
     @PostMapping("{id}/deposit/")
