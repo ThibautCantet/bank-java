@@ -1,4 +1,4 @@
 package com.bank.domain;
 
-public record WithdrawRejected(String reason) implements Event {
+public record WithdrawRejected(int amount) implements Event {
 }

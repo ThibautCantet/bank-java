@@ -37,7 +37,7 @@ class AccountTest {
         account.deposit(-50);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).contains(new DepositRejected(ACCOUNT_ID, -50));
+        assertThat(account.getEvents()).contains(new DepositRejected(-50));
     }
 
     @Test
@@ -57,7 +57,7 @@ class AccountTest {
         account.withdraw(200);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).contains(new WithdrawRejected("Insufficient funds"));
+        assertThat(account.getEvents()).contains(new WithdrawRejected(100));
     }
 }
 
