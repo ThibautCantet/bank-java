@@ -37,7 +37,7 @@ class AccountTest {
         account.deposit(-50);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).contains(new DepositRejected("Negative amount"));
+        assertThat(account.getEvents()).contains(new DepositRejected(ACCOUNT_ID, -50));
     }
 
     @Test
