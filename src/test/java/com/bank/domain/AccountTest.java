@@ -57,7 +57,7 @@ class AccountTest {
         account.withdraw(200);
 
         assertThat(account.getCurrentBalance()).isEqualTo(100);
-        assertThat(account.getEvents()).contains(new WithdrawRejected(100));
+        assertThat(account.getEvents()).contains(new WithdrawRejected(200));
     }
 }
 
