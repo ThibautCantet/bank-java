@@ -41,6 +41,16 @@ class AccountTest {
     }
 
     @Test
+    void withdraw_should_not_change_balance_when_value_is_negative() {
+        Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100)));
+
+        account.withdraw(-50);
+
+        assertThat(account.getCurrentBalance()).isEqualTo(100);
+        assertThat(account.getEvents()).contains(new WithdrawRejected(-50));
+    }
+
+    @Test
     void withdraw_should_decrease_balance() {
         Account account = new Account(List.of(new AccountCreated(ACCOUNT_ID), new AmountDeposited(100)));
 
