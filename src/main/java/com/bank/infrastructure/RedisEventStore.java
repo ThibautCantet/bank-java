@@ -20,7 +20,8 @@ public class RedisEventStore implements EventStore {
 
     @Override
     public void save(Account account) {
-
+        redisTemplate.opsForValue().set(account.getId().toString(),
+                new Events(account.getEvents()));
     }
 
     @Override
