@@ -24,7 +24,7 @@ class RedisEventStoreTest {
     private RedisEventStore redisEventStore;
 
     @Autowired
-    private RedisTemplate<String, Events> redisTemplate;
+    private RedisTemplate<UUID, Events> redisTemplate;
 
     @BeforeEach
     void setUp() {
@@ -42,14 +42,14 @@ class RedisEventStoreTest {
 
         redisEventStore.save(account);
 
-        Events events = redisTemplate.opsForValue().get(ACCOUNT_ID.toString());
+        Events events = redisTemplate.opsForValue().get(ACCOUNT_ID);
         assertThat(events).isNotNull();
         assertThat(events.values()).containsExactly(new AmountDeposited(100), new AmountWithdrawn(10), new WithdrawRejected(200), new DepositRejected(-10));
     }
 
     @Test
     void find_should_return_initialized_account() {
-        redisTemplate.opsForValue().set(ACCOUNT_ID.toString(), new Events(List.of(new AccountCreated(ACCOUNT_ID))));
+        redisTemplate.opsForValue().set(ACCOUNT_ID, new Events(List.of(new AccountCreated(ACCOUNT_ID))));
 
         Account foundAccount = redisEventStore.find(ACCOUNT_ID);
 

@@ -14,8 +14,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 public class RedisCacheConfig {
 
     @Bean
-    RedisTemplate<String, Events> eventsRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        var redisTemplate = new RedisTemplate<String, Events>();
+    RedisTemplate<UUID, Events> eventsRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        var redisTemplate = new RedisTemplate<UUID, Events>();
         redisTemplate.setKeySerializer(RedisSerializer.java(UUID.class.getClassLoader()));
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Events.class));
         redisTemplate.setConnectionFactory(redisConnectionFactory);

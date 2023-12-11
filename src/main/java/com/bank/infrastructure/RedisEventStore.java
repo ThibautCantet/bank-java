@@ -12,15 +12,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class RedisEventStore implements EventStore {
-    private final RedisTemplate<String, Events> redisTemplate;
+    private final RedisTemplate<UUID, Events> redisTemplate;
 
-    public RedisEventStore(RedisTemplate<String, Events> redisTemplate) {
+    public RedisEventStore(RedisTemplate<UUID, Events> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
     @Override
     public void save(Account account) {
-        redisTemplate.opsForValue().set(account.getId().toString(),
+        redisTemplate.opsForValue().set(account.getId(),
                 new Events(account.getEvents()));
     }
 
