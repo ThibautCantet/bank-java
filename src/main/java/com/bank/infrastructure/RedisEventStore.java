@@ -26,6 +26,8 @@ public class RedisEventStore implements EventStore {
 
     @Override
     public Account find(UUID id) {
-        return null;
+        Events events = redisTemplate.opsForValue().get(id);
+
+        return new Account(events.values());
     }
 }
